@@ -13,5 +13,6 @@ class CreateAccounts < ActiveRecord::Migration[7.0]
     end
 
     add_index :accounts, :ancestry
+    # add_index :accounts, [:account_number, :description, :ancestry], unique: true # TODO: See if it's allowed
   end
 end
