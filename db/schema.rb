@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_22_184135) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_22_204905) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -36,6 +36,33 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_22_184135) do
     t.string "money"
     t.datetime "updated_at", null: false
     t.index ["fund_id"], name: "index_chart_of_accounts_on_fund_id"
+  end
+
+  create_table "entries", force: :cascade do |t|
+    t.bigint "analytic_account_id", null: false
+    t.bigint "chart_of_account_id", null: false
+    t.datetime "created_at", null: false
+    t.string "description"
+    t.integer "entry_type"
+    t.bigint "financial_transaction_id", null: false
+    t.bigint "fund_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "value_cents"
+    t.index ["analytic_account_id"], name: "index_entries_on_analytic_account_id"
+    t.index ["chart_of_account_id"], name: "index_entries_on_chart_of_account_id"
+    t.index ["financial_transaction_id"], name: "index_entries_on_financial_transaction_id"
+    t.index ["fund_id"], name: "index_entries_on_fund_id"
+  end
+
+  create_table "financial_transactions", force: :cascade do |t|
+    t.bigint "chart_of_account_id", null: false
+    t.datetime "created_at", null: false
+    t.date "date"
+    t.string "description"
+    t.bigint "fund_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chart_of_account_id"], name: "index_financial_transactions_on_chart_of_account_id"
+    t.index ["fund_id"], name: "index_financial_transactions_on_fund_id"
   end
 
   create_table "funds", force: :cascade do |t|
@@ -70,6 +97,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_22_184135) do
   add_foreign_key "accounts", "chart_of_accounts"
   add_foreign_key "accounts", "funds"
   add_foreign_key "chart_of_accounts", "funds"
+  add_foreign_key "entries", "accounts", column: "analytic_account_id"
+  add_foreign_key "entries", "chart_of_accounts"
+  add_foreign_key "entries", "financial_transactions"
+  add_foreign_key "entries", "funds"
+  add_foreign_key "financial_transactions", "chart_of_accounts"
+  add_foreign_key "financial_transactions", "funds"
   add_foreign_key "whitelists", "funds"
   add_foreign_key "whitelists", "users"
 end
