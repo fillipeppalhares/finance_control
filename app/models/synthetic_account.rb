@@ -1,0 +1,2 @@
+class SyntheticAccount < Account
+end
