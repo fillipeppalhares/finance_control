@@ -1,4 +1,5 @@
+# frozen_string_literal: true
+
 class ChartOfAccount < ApplicationRecord
-  has_one :whitelist
-  has_many :users, through: :whitelist
+  belongs_to :fund
 end

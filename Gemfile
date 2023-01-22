@@ -20,6 +20,8 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 group :development, :test do
   gem "awesome_print"
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "factory_bot_rails"
+  gem "faker"
   gem "rspec-rails"
   gem "table_print"
 end
@@ -53,3 +55,4 @@ gem "simple_form"
 gem "strip_attributes"
 gem "ransack"
 gem "cancancan"
+gem "ancestry"
