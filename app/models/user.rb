@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   has_many :whitelists
-  has_many :chart_of_accounts, through: :whitelists
+  has_many :fund, through: :whitelists
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable

@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_15_163125) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_22_142826) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "chart_of_accounts", force: :cascade do |t|
+  create_table "funds", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
     t.datetime "updated_at", null: false
@@ -35,14 +35,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_15_163125) do
   end
 
   create_table "whitelists", force: :cascade do |t|
-    t.bigint "chart_of_account_id", null: false
     t.datetime "created_at", null: false
+    t.bigint "fund_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
-    t.index ["chart_of_account_id"], name: "index_whitelists_on_chart_of_account_id"
+    t.index ["fund_id"], name: "index_whitelists_on_fund_id"
     t.index ["user_id"], name: "index_whitelists_on_user_id"
   end
 
-  add_foreign_key "whitelists", "chart_of_accounts"
+  add_foreign_key "whitelists", "funds"
   add_foreign_key "whitelists", "users"
 end

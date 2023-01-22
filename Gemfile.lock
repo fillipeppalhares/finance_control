@@ -71,6 +71,8 @@ GEM
       request_store (>= 1.0.5)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
+    ancestry (4.2.0)
+      activerecord (>= 5.2.6)
     ast (2.4.2)
     awesome_print (1.9.2)
     bcrypt (3.1.18)
@@ -320,6 +322,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_tenant
+  ancestry
   awesome_print
   bootsnap
   brakeman
