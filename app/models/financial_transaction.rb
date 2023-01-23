@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FinancialTransaction < ApplicationRecord
   belongs_to :fund
   belongs_to :chart_of_account

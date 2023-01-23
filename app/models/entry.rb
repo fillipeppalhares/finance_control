@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Entry < ApplicationRecord
   include Monetizable
 
@@ -6,5 +8,5 @@ class Entry < ApplicationRecord
   belongs_to :analytic_account
   belongs_to :financial_transaction
 
-  has_enumeration_for :entry_type, with: EntryTypeEnum, create_helpers: { prefix: true }
+  has_enumeration_for :entry_type, with: EntryTypeEnum, create_helpers: true
 end

@@ -6,7 +6,7 @@ class CreateEntries < ActiveRecord::Migration[7.0]
       t.string :description
       t.references :fund, null: false, foreign_key: true
       t.references :chart_of_account, null: false, foreign_key: true
-      t.references :analytic_account, null: false, foreign_key: { to_table: :accounts }
+      t.references :analytic_account, null: false, foreign_key: true
       t.references :financial_transaction, null: false, foreign_key: true
 
       t.timestamps

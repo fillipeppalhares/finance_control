@@ -10,23 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_22_204905) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_23_000321) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
     t.string "account_number"
-    t.boolean "amount"
+    t.bigint "accountable_id", null: false
+    t.string "accountable_type", null: false
     t.string "ancestry"
     t.bigint "chart_of_account_id", null: false
     t.datetime "created_at", null: false
     t.string "description"
     t.bigint "fund_id", null: false
-    t.string "type"
     t.datetime "updated_at", null: false
+    t.index ["accountable_type", "accountable_id"], name: "index_accounts_on_accountable"
     t.index ["ancestry"], name: "index_accounts_on_ancestry"
     t.index ["chart_of_account_id"], name: "index_accounts_on_chart_of_account_id"
     t.index ["fund_id"], name: "index_accounts_on_fund_id"
+  end
+
+  create_table "analytic_accounts", force: :cascade do |t|
+    t.boolean "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "chart_of_accounts", force: :cascade do |t|
@@ -71,6 +78,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_22_204905) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "synthetic_accounts", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.boolean "admin", default: false
     t.datetime "created_at", null: false
@@ -97,7 +109,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_22_204905) do
   add_foreign_key "accounts", "chart_of_accounts"
   add_foreign_key "accounts", "funds"
   add_foreign_key "chart_of_accounts", "funds"
-  add_foreign_key "entries", "accounts", column: "analytic_account_id"
+  add_foreign_key "entries", "analytic_accounts"
   add_foreign_key "entries", "chart_of_accounts"
   add_foreign_key "entries", "financial_transactions"
   add_foreign_key "entries", "funds"
