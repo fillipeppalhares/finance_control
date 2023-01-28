@@ -15,14 +15,22 @@ class Account < ApplicationRecord
     "#{parent.full_account_number}.#{account_number}"
   end
 
-  def sum_values
+  def sum_accounts
     case accountable_type
     when "AnalyticAccount"
       accountable.sum_entries
     when "SyntheticAccount"
       children.reduce({}) do |sum, child|
-        sum.merge(child.sum_values) { |_, first_value, second_value| first_value + second_value }
+        sum.merge(child.sum_accounts) { |_, first_value, second_value| first_value + second_value }
       end
     end
+  end
+
+  def net_income
+    account_balance = sum_accounts
+    credit = account_balance[:credit]
+    debit = account_balance[:debit]
+
+    credit - debit
   end
 end
