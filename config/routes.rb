@@ -4,4 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   get "/balance_sheet", to: "balance_sheets#index"
+
+  resources :analytic_accounts
+  resources :synthetic_accounts
 end

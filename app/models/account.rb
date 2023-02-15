@@ -31,6 +31,8 @@ class Account < ApplicationRecord
     credit = account_balance[:credit]
     debit = account_balance[:debit]
 
+    return unless credit || debit
+
     credit - debit
   end
 end
