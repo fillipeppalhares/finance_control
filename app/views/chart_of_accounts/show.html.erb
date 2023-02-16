@@ -1,0 +1,7 @@
+<%= Fund.find(@chart_of_account.fund_id).name %>
+<%= @chart_of_account.id %>
+<%= @chart_of_account.description %>
+
+<% @root_accounts.each do |root_account| %>
+  <%= chart_builder(root_account) %>
+<% end %>

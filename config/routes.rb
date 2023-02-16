@@ -7,4 +7,5 @@ Rails.application.routes.draw do
 
   resources :analytic_accounts
   resources :synthetic_accounts
+  resources :chart_of_accounts
 end
