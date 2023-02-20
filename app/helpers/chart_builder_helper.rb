@@ -15,7 +15,8 @@ module ChartBuilderHelper
   end
 
   def synthetic_account_builder(account)
-    buttons = [[{ icon: "bi bi-pencil", link: "" }, { icon: "bi bi-x-lg", link: "" }]]
+    buttons = [[{ icon: "bi bi-pencil", link: edit_synthetic_account_path(account.accountable), data: { turbo_frame: dom_id(account.accountable) } },
+    { icon: "bi bi-x-lg", link: synthetic_account_path(account.accountable), data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: "_top" } }]]
 
     account_card(account, buttons) do
       if account.has_children?
