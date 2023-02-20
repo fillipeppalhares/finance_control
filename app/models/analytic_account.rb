@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AnalyticAccount < ApplicationRecord
-  has_many :entries
+  has_many :entries, dependent: :destroy
   has_one :account, as: :accountable, dependent: :destroy
   accepts_nested_attributes_for :account
 
