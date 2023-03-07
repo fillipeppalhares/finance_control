@@ -2,6 +2,8 @@
 <%= @chart_of_account.id %>
 <%= @chart_of_account.description %>
 
-<% @root_accounts.each do |root_account| %>
-  <%= chart_builder(root_account) %>
-<% end %>
+<div class="container">
+  <% @root_accounts.each do |root_account| %>
+    <%= render "synthetic_accounts/synthetic_account", account: root_account %>
+  <% end %>
+</div>

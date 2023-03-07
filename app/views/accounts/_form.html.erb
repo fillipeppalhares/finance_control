@@ -1,0 +1,9 @@
+<%= f.simple_fields_for :account do |ff| %>
+  <%= ff.input :account_number %>
+  <%= ff.input :description %>
+  <%= ff.input :ancestry, as: :hidden %>
+  <%= ff.input :accountable_type, as: :hidden %>
+  <%= ff.input :accountable_id, as: :hidden %>
+  <%= ff.association :chart_of_account, as: :hidden %>
+  <%= ff.association :fund, as: :hidden %>
+<% end %>

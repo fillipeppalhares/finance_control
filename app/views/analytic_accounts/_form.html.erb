@@ -1,7 +1,7 @@
 <%= simple_form_for @analytic_account do |f| %>
   <%= f.input :amount %>
 
-  <%= render "accounts/account", f: f %>
+  <%= render "accounts/form", f: f %>
 
   <%= f.button :submit, class: "btn btn-primary" %>
 <% end %>

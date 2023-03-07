@@ -1,0 +1,33 @@
+<% buttons = [[{ icon: "bi bi-pencil", link: edit_synthetic_account_path(account.accountable), data: { turbo_frame: dom_id(account.accountable) } },
+   { icon: "bi bi-x-lg", link: synthetic_account_path(account.accountable), data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: "_top" } }]] %>
+   
+<%= render "accounts/account", account: account, buttons: buttons do %>
+    <div class="card-body collapse" id=<%= dom_id(account, :collapsable) %>>
+      <div class="ps-1">
+        <%= turbo_frame_tag(dom_id(account.accountable, :children)) do %>
+          <% if account.has_children? %>
+            <% account.children.sort.each do |child| %>
+              <% case child.accountable_type %>
+              <% when "SyntheticAccount" %>
+                <%= render "synthetic_accounts/synthetic_account", account: child %>
+              <% when "AnalyticAccount" %>
+                <%= render "analytic_accounts/analytic_account", account: child %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <%= turbo_frame_tag(dom_id(account.accountable, :new_child)) %>
+      </div>
+
+      <div>
+        <i class="bi bi-plus-lg"></i>
+        <%= link_to "New analytic account", new_analytic_account_path(analytic_account: { account_attributes: { accountable_type: account.accountable_type, accountable_id: account.accountable_id } }), class: "link link-primary text-dark px-0 pt-0 pb-1", data: { turbo_frame: dom_id(account.accountable, :new_child) } %>
+      </div>
+
+      <div>
+        <i class="bi bi-plus-lg"></i>
+        <%= link_to "New synthetic account", new_synthetic_account_path(synthetic_account: { account_attributes: { accountable_type: account.accountable_type, accountable_id: account.accountable_id } }), class: "link link-primary text-dark px-0 pt-0 pb-1", data: { turbo_frame: dom_id(account.accountable, :new_child) } %>
+      </div>
+    </div>
+<% end %>

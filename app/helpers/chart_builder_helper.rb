@@ -15,21 +15,30 @@ module ChartBuilderHelper
   end
 
   def synthetic_account_builder(account)
-    buttons = [[{ icon: "bi bi-pencil", link: edit_synthetic_account_path(account.accountable), data: { turbo_frame: dom_id(account.accountable) } },
+    accountable_type = account.accountable_type
+    accountable_id = account.accountable_id
+
+    buttons = [[{ icon: "bi bi-suit-diamond-fill", link: new_analytic_account_path(analytic_account: { account_attributes: { accountable_type:, accountable_id: } }), data: { turbo_frame: dom_id(account.accountable, :new_child) } },
+    { icon: "bi bi-suit-spade-fill", link: new_synthetic_account_path(synthetic_account: { account_attributes: { accountable_type:, accountable_id: } }), data: { turbo_method: dom_id(account.accountable, :new_child) } }],
+      [{ icon: "bi bi-pencil", link: edit_synthetic_account_path(account.accountable), data: { turbo_frame: dom_id(account.accountable) } },
     { icon: "bi bi-x-lg", link: synthetic_account_path(account.accountable), data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: "_top" } }]]
 
     account_card(account, buttons) do
       if account.has_children?
         concat(content_tag(:div, class: "card-body collapse", id: dom_id(account, :collapsable)) do
           concat(content_tag(:div, style: "padding-left: 10px;") do
-            account.children.each do |child|
-              case child.accountable_type
-              when "SyntheticAccount"
-                concat(synthetic_account_builder(child))
-              when "AnalyticAccount"
-                concat(analytic_account_builder(child))
+            concat(turbo_frame_tag(dom_id(account.accountable, :children)) do
+              account.children.each do |child|
+                case child.accountable_type
+                when "SyntheticAccount"
+                  concat(synthetic_account_builder(child))
+                when "AnalyticAccount"
+                  concat(analytic_account_builder(child))
+                end
               end
-            end
+            end)
+
+            concat(turbo_frame_tag dom_id(account.accountable, :new_child))
           end)
         end)
       end

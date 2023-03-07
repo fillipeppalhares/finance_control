@@ -1,4 +1,15 @@
-<%= f.simple_fields_for :account do |ff| %>
-  <%= ff.input :account_number %>
-  <%= ff.input :description %>
-<% end %>
+<div class="card" id=<%= dom_id(account.accountable, :card) %>>
+  <div class="card-header">
+    <div class="d-flex justify-content-between">
+      <%= turbo_frame_tag(account.accountable) do %>
+        <h5 class="card-title" data-bs-toggle="collapse" data-bs-target=<%= dom_id(account, :"#collapsable") %>>
+          <%= "#{account.full_account_number} - #{account.description}" %>
+        </h5>
+      <% end %>
+
+      <%= icon_button_group(buttons) %>
+    </div>
+  </div>
+
+  <%= yield if block_given? %>
+</div>

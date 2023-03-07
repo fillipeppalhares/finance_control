@@ -1,0 +1,5 @@
+<% buttons = [[{ icon: "bi bi-pencil", link: edit_synthetic_account_path(@synthetic_account), data: { turbo_frame: dom_id(@synthetic_account) } },
+   { icon: "bi bi-x-lg", link: synthetic_account_path(@synthetic_account), data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: "_top" } }]] %>
+
+<%= turbo_stream.append dom_id(@parent_account, :children), partial: "synthetic_accounts/synthetic_account", locals: { account: @synthetic_account.account, buttons: buttons } %>
+<%= turbo_stream.update dom_id(@parent_account, :new_child), "" %>

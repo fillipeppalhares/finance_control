@@ -1,0 +1,4 @@
+<% buttons = [[{ icon: "bi bi-pencil", link: edit_analytic_account_path(account.accountable), data: { turbo_frame: dom_id(account.accountable) } },
+   { icon: "bi bi-x-lg", link: analytic_account_path(account.accountable), data: { turbo_method: :delete, turbo_confirm: "Are you sure?", turbo_frame: "_top" } }]] %>
+
+<%= render "accounts/account", account: account, buttons: buttons %>
