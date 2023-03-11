@@ -15,6 +15,10 @@ class Account < ApplicationRecord
     "#{parent.full_account_number}.#{account_number}"
   end
 
+  def account_identity
+    "#{full_account_number} - #{description}"
+  end
+
   def sum_accounts
     case accountable_type
     when "AnalyticAccount"

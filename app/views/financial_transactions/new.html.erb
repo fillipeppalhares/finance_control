@@ -1,0 +1,65 @@
+<%= simple_form_for @financial_transaction do |f| %>
+  <%= f.input :description %>
+  <%= f.input :date %>
+  <%= f.association :chart_of_account %>
+  <%= f.association :fund %>
+
+  <div data-controller="nested-form">
+    <template data-nested-form-target="template">
+      <tr class="nested-fields">
+        <%= f.simple_fields_for :entries, Entry.new, child_index: "NEW_RECORD" do |ff| %>
+          <%= tag.td ff.input :entry_type, collection: EntryTypeEnum, label: false %>
+          <%= tag.td ff.input :value_cents, label: false %>
+          <%= tag.td ff.input :description, label: false %>
+          <%= tag.td ff.association :chart_of_account, label: false %>
+          <%= tag.td ff.association :fund, label: false %>
+          <%= tag.td ff.association :analytic_account, label_method: :account_identity, label: false %>
+
+          
+          <td>
+            <% icon = tag.i class: "bi bi-trash text-danger" %>
+            <%= link_to icon, "#", class: nil, data: { turbo_method: :delete, action: "nested-form#removeItem" } %>
+            <%= ff.input :_destroy, as: :hidden %>
+          </td>
+        <% end %>
+      </tr>
+    </template>
+
+    <table data-nested-form-target="table" class="table table-bordered text-nowrap">
+      <thead>
+        <tr class="text-muted small">
+          <th>entry_type</th>
+          <th>value_cents</th>
+          <th>description</th>
+          <th>chart_of_account</th>
+          <th>fund</th>
+          <th>analytic_account</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="nested-fields">
+          <%= f.simple_fields_for :entries do |ff| %>
+            <%= tag.td ff.input :entry_type, collection: EntryTypeEnum, label: false %>
+            <%= tag.td ff.input :value_cents, label: false %>
+            <%= tag.td ff.input :description, label: false %>
+            <%= tag.td ff.association :chart_of_account, label: false %>
+            <%= tag.td ff.association :fund, label: false %>
+            <%= tag.td ff.association :analytic_account, label_method: :account_identity, label: false %>
+            
+            <td>
+              <% icon = tag.i class: "bi bi-trash text-danger" %>
+              <%= link_to icon, "#", class: nil, data: { turbo_method: :delete, action: "nested-form#removeItem" } %>
+              <%= ff.input :_destroy, as: :hidden %>
+            </td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="my-2">
+      <%= link_to "Add", "#", class: "btn btn-light btn-sm text-dark", data: { action: "nested-form#addItem" } %>
+    </div>
+  </div>
+
+  <%= f.button :submit, class: "btn btn-primary" %>
+<% end %>

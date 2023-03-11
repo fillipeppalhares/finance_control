@@ -5,6 +5,10 @@ class AnalyticAccount < ApplicationRecord
   has_one :account, as: :accountable, dependent: :destroy
   accepts_nested_attributes_for :account
 
+  delegate :description, to: :account
+  delegate :full_account_number, to: :account
+  delegate :account_identity, to: :account
+
   validates :amount, inclusion: [true, false]
 
   def sum_entries
